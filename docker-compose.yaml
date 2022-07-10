@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   server:
     build: .
@@ -12,10 +12,12 @@ services:
       - database
     command: [ "npm", "start" ]
   database:
-    image: postgres:9.6-alpine
+    image: postgres:14.1-alpine
     container_name: postgres
     ports:
-      - '5436:5431'
+      - '5432:5432'
+    env_file:
+      - .env
     volumes:
       - database-data:/var/lib/postgresql/data
 volumes:

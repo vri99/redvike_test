@@ -1,7 +1,6 @@
 import 'reflect-metadata'
-import * as express from 'express'
+import express from 'express'
 import AppDataSource from '../db';
-import router from './router/index';
 
 AppDataSource.initialize()
     .then(() => {
@@ -9,9 +8,11 @@ AppDataSource.initialize()
 
         app.set("env", process.env.APP_ENV);
 
-        app.use('/api', router)
+        // app.use('/api', router);
 
         app.listen(3000)
+
+        console.log('Listen on port: 8080');
     })
     .catch((err) => {
         console.error("Error during Data Source initialization", err)
