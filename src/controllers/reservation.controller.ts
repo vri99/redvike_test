@@ -1,4 +1,4 @@
-import ReservationEntity from "../entities/reservation.entity";
+import {ReservationEntity} from "../entities/reservation.entity";
 import dataSource from "../orm/dbInitConnection";
 import {Raw} from "typeorm";
 import {ReservationDto} from "../dtos/reservation.dto";

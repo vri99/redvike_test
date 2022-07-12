@@ -9,6 +9,7 @@ import {errorHandler} from './middlewares/errorHandler/errorHandler';
 import dbInitConnection from './orm/dbInitConnection';
 import routes from './api';
 import {CustomError} from "./middlewares/errorHandler/customError";
+import {runSeeders} from "typeorm-extension";
 
 export const app = express();
 app.use(cors());
@@ -20,6 +21,7 @@ app.use('/api', routes);
 
 dbInitConnection.initialize()
     .then(() => {
+        runSeeders(dbInitConnection);
         app.listen(3000, listenCallback);
     })
     .catch((error) => {

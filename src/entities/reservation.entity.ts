@@ -1,9 +1,9 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn,} from "typeorm"
-import AmenityEntity from "./amenity.entity";
-import UserEntity from "./user.entity";
+import {AmenityEntity} from "./amenity.entity";
+import {UserEntity} from "./user.entity";
 
 @Entity({name: "reservation"})
-export default class ReservationEntity {
+export class ReservationEntity {
     @PrimaryGeneratedColumn()
     id: number
 

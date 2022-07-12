@@ -1,5 +1,5 @@
 import {ReservationDto} from "../dtos/reservation.dto";
-import ReservationEntity from "../entities/reservation.entity";
+import {ReservationEntity} from "../entities/reservation.entity";
 
 export interface groupReservationsByUserInterface {
     (acc: ReservationByUserDto, curr: ReservationEntity): ReservationByUserDto

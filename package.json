@@ -5,9 +5,9 @@
   "main": "./build/src/app.js",
   "scripts": {
     "dev": "nodemon -L src/app.ts",
-    "start": "npm run build && node build/src/app.js",
+    "start": "npm run build && node build/src/app.js && npm run seed",
     "build": "tsc -p .",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed"
   },
   "keywords": [],
   "author": "Rostyslav Voloshyn",
@@ -32,6 +32,6 @@
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.7",
-    "typeorm-seeding": "^1.6.1"
+    "typeorm-extension": "^2.1.4"
   }
 }
