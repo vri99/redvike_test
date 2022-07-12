@@ -1,7 +1,7 @@
 {
   "name": "test",
   "version": "1.0.0",
-  "description": "",
+  "description": "Redvike's Test Project By Rostyslav",
   "main": "./build/src/app.js",
   "scripts": {
     "dev": "nodemon -L src/app.ts",
@@ -10,7 +10,7 @@
     "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "keywords": [],
-  "author": "",
+  "author": "Rostyslav Voloshyn",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.12",
