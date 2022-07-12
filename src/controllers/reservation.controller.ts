@@ -1,10 +1,16 @@
-import Reservation from "../entities/reservation";
+import ReservationEntity from "../entities/reservation.entity";
 import dataSource from "../orm/dbInitConnection";
 import {Raw} from "typeorm";
 import {ReservationDto} from "../dtos/reservation.dto";
+import {
+    getReservationsByUserInterface,
+    groupReservationsByUserInterface,
+    ReservationByUserDto,
+    transformReservationInterface
+} from "../interfaces/reservation.interface";
 
 const getReservations = async (amenity_id: number, day: string): Promise<ReservationDto[]> => {
-    const result: Reservation[] = await dataSource.getRepository(Reservation).find({
+    const result: ReservationEntity[] = await dataSource.getRepository(ReservationEntity).find({
         where: {
             amenity_id,
             date: Raw(date => `${date} >= '${transformDate(day, "00:00:00")}' and ${date} < '${transformDate(day, "23:59:59")}'`)
@@ -12,7 +18,7 @@ const getReservations = async (amenity_id: number, day: string): Promise<Reserva
         order: {
             start_time: "ASC",
         },
-        relations: ["amenity"]
+        relations: ["amenity"],
     });
 
     if (result.length) return result.map(transformReservation);
@@ -20,24 +26,22 @@ const getReservations = async (amenity_id: number, day: string): Promise<Reserva
     return [];
 }
 
-const getReservationsByUser = async (user_id: number): Promise<Reservation[]> => {
-    const result: Reservation[] = await dataSource.getRepository(Reservation).find({
+const getReservationsByUser: getReservationsByUserInterface = async (user_id: number) => {
+    let res: ReservationByUserDto = {};
+
+    res = (await dataSource.getRepository(ReservationEntity).find({
         where: {
             user_id,
         },
         order: {
             date: "ASC"
         }
+    })).reduce(groupReservationsByUser, res);
 
-    });
-
-    console.log(result)
-    if (result.length) return result;
-
-    return [];
+    return res;
 }
 
-const transformReservation = (reserv: Reservation): ReservationDto => ({
+const transformReservation: transformReservationInterface = (reserv: ReservationEntity): ReservationDto => ({
     reservation_id: reserv.id,
     amenity_id: reserv.amenity_id,
     amenity_name: reserv.amenity.name,
@@ -45,7 +49,16 @@ const transformReservation = (reserv: Reservation): ReservationDto => ({
     duration: reserv.end_time - reserv.start_time,
 });
 
-const groupReservationsByUser = () => {
+const groupReservationsByUser: groupReservationsByUserInterface = (acc: ReservationByUserDto, curr): ReservationByUserDto => {
+    const date: string = getDate(curr.date);
+
+    if (date in acc) {
+        acc[date].push(curr);
+        return acc;
+    }
+
+    acc[date] = [curr];
+    return acc;
 }
 
 const transformTime = (start_time: number): string => {
@@ -59,6 +72,16 @@ const transformTime = (start_time: number): string => {
 const transformTimeNumbers = (numbers) => numbers < 10 ? `0${numbers}` : numbers;
 
 const transformDate = (date: string, time: string) => `${date} ${time}`;
+
+const getDate = (d: string): string => {
+    const date: Date = new Date(d);
+
+    const day: number = date.getDate();
+    const month: number = date.getMonth() + 1;
+    const year: number = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
 
 export {
     getReservations,
