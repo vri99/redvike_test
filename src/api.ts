@@ -1,10 +1,8 @@
 import {Router} from 'express';
-import reservationRouter from './routes/reservation';
-import amenityRouter from './routes/amenity';
+import reservationRouter from './routes/reservation.router';
 
-const router = Router();
+const router: Router = Router();
 
 router.use('/reservation', reservationRouter);
-router.use('/amenity', amenityRouter);
 
 export default router;

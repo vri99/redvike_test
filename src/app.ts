@@ -5,8 +5,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-const fileUpload = require('express-fileupload')
-
 import {errorHandler} from './middlewares/errorHandler/errorHandler';
 import dbInitConnection from './orm/dbInitConnection';
 import routes from './api';
@@ -22,13 +20,16 @@ app.use('/api', routes);
 
 dbInitConnection.initialize()
     .then(() => {
-        app.listen(8080, listenCallback);
+        app.listen(3000, listenCallback);
     })
-    .catch((error) => new CustomError(503, "General", "No db connection", [error]))
+    .catch((error) => {
+        console.log(error)
+        return new CustomError(503, "General", "No db connection", [error])
+    })
 
 app.use(errorHandler);
 
-const listenCallback = () => {
-    console.log(`Server running on port ${8080}`);
+const listenCallback: () => void = (): void => {
+    console.log(`Server running on port ${3000}`);
     console.log('Database initialized.')
 }

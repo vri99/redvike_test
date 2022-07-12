@@ -1,8 +1,8 @@
 import "reflect-metadata"
 import {DataSource} from "typeorm";
-import Amenity from "../entities/amenity";
-import Reservation from "../entities/reservation";
-import User from "../entities/user";
+import AmenityEntity from "../entities/amenity.entity";
+import ReservationEntity from "../entities/reservation.entity";
+import UserEntity from "../entities/user.entity";
 
 const dataSource: DataSource = new DataSource({
     database: process.env.POSTGRES_DB,
@@ -11,7 +11,7 @@ const dataSource: DataSource = new DataSource({
     host: process.env.POSTGRES_HOST,
     port: +process.env.POSTGRES_PORT,
 
-    entities: [Amenity, Reservation, User],
+    entities: [AmenityEntity, ReservationEntity, UserEntity],
     synchronize: true,
     type: "postgres",
 })
