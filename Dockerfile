@@ -12,4 +12,4 @@ COPY . ./
 RUN node -v
 RUN npm install
 CMD ["npm","run","build"]
-CMD ["npm","run","dev"]
+CMD ["npm","run","start"]

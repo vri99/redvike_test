@@ -5,8 +5,9 @@
   "main": "./build/src/app.js",
   "scripts": {
     "dev": "nodemon -L src/app.ts",
-    "start": "node build/src/app.js",
-    "build": "tsc -p ."
+    "start": "npm run build && node build/src/app.js",
+    "build": "tsc -p .",
+    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,6 @@
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.7",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.9/xlsx-0.18.9.tgz"
+    "typeorm-seeding": "^1.6.1"
   }
 }
