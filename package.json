@@ -4,8 +4,8 @@
   "description": "Redvike's Test Project By Rostyslav",
   "main": "./build/src/app.js",
   "scripts": {
-    "dev": "nodemon -L src/app.ts",
-    "start": "npm run build && node build/src/app.js && npm run seed",
+    "dev": "nodemon src/app.ts",
+    "start": "NODE_PATH=./build node ./build/src/app.js && npm run seed",
     "build": "tsc -p .",
     "seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed"
   },
@@ -25,7 +25,6 @@
     "@types/express-fileupload": "^1.2.2",
     "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
-    "excel": "^1.0.1",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
     "helmet": "^5.1.0",

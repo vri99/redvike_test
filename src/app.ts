@@ -12,6 +12,9 @@ import {CustomError} from "./middlewares/errorHandler/customError";
 import {runSeeders} from "typeorm-extension";
 
 export const app = express();
+
+console.log("APP INITIALIZATION...");
+
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
